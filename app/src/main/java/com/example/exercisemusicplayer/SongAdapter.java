@@ -12,6 +12,11 @@ public class SongAdapter extends BaseAdapter {
     private ArrayList<song> songs;
     private LayoutInflater songInflater;
 
+    public SongAdapter(Context context, ArrayList<song> theSongs){
+        songs=theSongs;
+        songInflater=LayoutInflater.from(context);
+    }
+
     @Override
     public int getCount() {
         return songs.size();
