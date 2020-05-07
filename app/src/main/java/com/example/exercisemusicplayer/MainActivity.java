@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class MainActivity extends AppCompatActivity {
     private ArrayList<song> songList;
@@ -22,6 +24,13 @@ public class MainActivity extends AppCompatActivity {
         songView = findViewById(R.id.song_list);
         songList = new ArrayList<song>();
         getSongList();
+
+        Collections.sort(songList, new Comparator<song>(){
+            @Override
+            public int compare(song a, song b) {
+                return a.get_Title().compareTo(b.get_Title());
+            }
+        });
     }
 
     public void getSongList(){
