@@ -31,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
                 return a.get_Title().compareTo(b.get_Title());
             }
         });
+
+        SongAdapter songAdapter = new SongAdapter(this, songList);
+        songView.setAdapter(songAdapter);
     }
 
     public void getSongList(){
