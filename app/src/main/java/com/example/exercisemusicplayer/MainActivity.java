@@ -1,19 +1,21 @@
 package com.example.exercisemusicplayer;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
 import android.widget.ListView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
 public class MainActivity extends AppCompatActivity {
-    private ArrayList<song> songList;
+    private ArrayList<Song> songList;
     private ListView songView;
 
     @Override
@@ -22,13 +24,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         songView = findViewById(R.id.song_list);
-        songList = new ArrayList<song>();
+        songList = new ArrayList<Song>();
         getSongList();
 
-        Collections.sort(songList, new Comparator<song>(){
+        Collections.sort(songList, new Comparator<Song>(){
             @Override
-            public int compare(song a, song b) {
-                return a.get_Title().compareTo(b.get_Title());
+            public int compare(Song a, Song b) {
+                return a.getTitle().compareTo(b.getTitle());
             }
         });
 
@@ -36,10 +38,16 @@ public class MainActivity extends AppCompatActivity {
         songView.setAdapter(songAdapter);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
     public void getSongList(){
         ContentResolver musicResolver = getContentResolver();
         Uri musicUri = android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        Cursor musicCursor = musicResolver.query(musicUri, null, null, null, null);
+        @SuppressLint("Recycle") Cursor musicCursor = musicResolver.query(musicUri, null, null, null, null);
 
         if(musicCursor!=null && musicCursor.moveToFirst()){
             //get columns
@@ -54,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 long thisId = musicCursor.getLong(idColumn);
                 String thisTitle = musicCursor.getString(titleColumn);
                 String thisArtist = musicCursor.getString(artistColumn);
-                songList.add(new song(thisId, thisTitle, thisArtist));
+                songList.add(new Song(thisId, thisTitle, thisArtist));
             }
             while (musicCursor.moveToNext());
         }

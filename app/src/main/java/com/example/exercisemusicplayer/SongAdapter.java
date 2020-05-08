@@ -11,10 +11,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class SongAdapter extends BaseAdapter {
-    private ArrayList<song> songs;
+    private ArrayList<Song> songs;
     private LayoutInflater songInflater;
 
-    public SongAdapter(Context context, ArrayList<song> theSongs){
+    public SongAdapter(Context context, ArrayList<Song> theSongs){
         songs=theSongs;
         songInflater=LayoutInflater.from(context);
     }
@@ -38,15 +38,15 @@ public class SongAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         //map to song layout
         LinearLayout songLay = (LinearLayout)songInflater.inflate
-                (R.layout.activity_song, parent, false);
+                (R.layout.song, parent, false);
         //get title and artist views
         TextView songView = (TextView)songLay.findViewById(R.id.song_title);
         TextView artistView = (TextView)songLay.findViewById(R.id.song_artist);
         //get song using position
-        song currSong = songs.get(position);
+        Song currSong = songs.get(position);
         //get title and artist strings
-        songView.setText(currSong.get_Title());
-        artistView.setText(currSong.get_Artist());
+        songView.setText(currSong.getTitle());
+        artistView.setText(currSong.getArtist());
         //set position as tag
         songLay.setTag(position);
         return songLay;
