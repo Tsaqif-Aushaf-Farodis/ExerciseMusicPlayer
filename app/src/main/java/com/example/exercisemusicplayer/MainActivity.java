@@ -13,9 +13,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
@@ -53,6 +55,21 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_shuffle:
+                //shuffle
+                break;
+            case R.id.action_end:
+                stopService(playIntent);
+                musicService=null;
+                System.exit(0);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void getSongList(){
