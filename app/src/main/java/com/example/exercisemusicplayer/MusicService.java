@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.Binder;
 import android.os.IBinder;
 import android.os.PowerManager;
 
@@ -38,6 +39,16 @@ public class MusicService extends Service implements
         player.setOnPreparedListener(this);
         player.setOnCompletionListener(this);
         player.setOnErrorListener(this);
+    }
+
+    public void setList(ArrayList<Song> theSongs){
+        songs=theSongs;
+    }
+
+    public class MusicBinder extends Binder{
+        MusicService getService(){
+            return MusicService.this;
+        }
     }
 
     @Override
