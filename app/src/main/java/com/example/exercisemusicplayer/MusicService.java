@@ -21,6 +21,8 @@ public class MusicService extends Service implements
     private ArrayList<Song> songs;
     private int songPos; //current position
 
+    private final IBinder musicBind = new MusicBinder();
+
     public void onCreate(){
         //create the service
         super.onCreate();
@@ -53,7 +55,7 @@ public class MusicService extends Service implements
 
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return musicBind;
     }
 
     @Override
