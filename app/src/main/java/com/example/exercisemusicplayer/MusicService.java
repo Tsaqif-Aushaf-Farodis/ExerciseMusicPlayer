@@ -106,4 +106,16 @@ public class MusicService extends Service implements
         }
         player.prepareAsync();
     }
+
+    public void playPrev(){
+        songPos--;
+        if(songPos<0) songPos=songs.size()-1;
+        playSong();
+    }
+
+    public void playNext(){
+        songPos++;
+        if(songPos>=songs.size()) songPos=0;
+        playSong();
+    }
 }

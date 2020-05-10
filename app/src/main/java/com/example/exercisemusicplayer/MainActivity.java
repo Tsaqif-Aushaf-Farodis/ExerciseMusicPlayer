@@ -147,12 +147,12 @@ public class MainActivity extends AppCompatActivity implements MediaPlayerContro
         controller.setPrevNextListeners(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                playNext();
+                musicService.playNext();
             }
         }, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                playPrev();
+                musicService.playPrev();
             }
         });
         controller.setMediaPlayer(this);
