@@ -147,17 +147,26 @@ public class MainActivity extends AppCompatActivity implements MediaPlayerContro
         controller.setPrevNextListeners(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                musicService.playNext();
+                playNext();
             }
         }, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                musicService.playPrev();
+                playPrev();
             }
         });
         controller.setMediaPlayer(this);
         controller.setAnchorView(findViewById(R.id.song_list));
         controller.setEnabled(true);
+    }
+    //play next & previous
+    private void playNext(){
+        musicService.playNext();
+        controller.show(0);
+    }
+    private void playPrev(){
+        musicService.playPrev();
+        controller.show(0);
     }
 
     @Override
