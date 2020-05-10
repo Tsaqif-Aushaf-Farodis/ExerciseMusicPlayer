@@ -80,7 +80,12 @@ public class MusicService extends Service implements
 
     @Override
     public void onPrepared(MediaPlayer mp) {
+        //start playback
+        mp.start();
+    }
 
+    public void setSong(int songIndex){
+        songPos=songIndex;
     }
 
     public void playSong(){
