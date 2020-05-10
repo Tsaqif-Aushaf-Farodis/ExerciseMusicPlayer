@@ -174,8 +174,17 @@ public class MusicService extends Service implements
     }
 
     public void playNext(){
-        songPos++;
-        if(songPos>=songs.size()) songPos=0;
+        if(shuffle){
+            int newSong = songPos;
+            while(newSong==songPos){
+                newSong=rand.nextInt(songs.size());
+            }
+            songPos=newSong;
+        }
+        else{
+            songPos++;
+            if(songPos>=songs.size()) songPos=0;
+        }
         playSong();
     }
 }
