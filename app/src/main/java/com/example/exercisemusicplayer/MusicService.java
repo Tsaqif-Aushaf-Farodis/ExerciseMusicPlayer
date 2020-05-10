@@ -1,5 +1,7 @@
 package com.example.exercisemusicplayer;
 
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.ContentUris;
 import android.content.Intent;
@@ -23,8 +25,10 @@ public class MusicService extends Service implements
     private MediaPlayer player;
     private ArrayList<Song> songs;
     private int songPos; //current position
-
     private final IBinder musicBind = new MusicBinder();
+
+    private String songTitle="";
+    private static final int NOTIFY_ID=1;
 
     public void onCreate(){
         //create the service
@@ -82,6 +86,22 @@ public class MusicService extends Service implements
     public void onPrepared(MediaPlayer mp) {
         //start playback
         mp.start();
+        Intent notIntent = new Intent(this, MainActivity.class);
+        notIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendInt = PendingIntent.getActivity(this, 0,
+                notIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Notification.Builder builder = new Notification.Builder(this);
+
+        builder.setContentIntent(pendInt)
+                .setSmallIcon(R.drawable.ic_play_arrow_black_24dp)
+                .setTicker(songTitle)
+                .setOngoing(true)
+                .setContentTitle("Playing")
+  .setContentText(songTitle);
+        Notification not = builder.build();
+
+        startForeground(NOTIFY_ID, not);
     }
 
     public void setSong(int songIndex){
@@ -92,6 +112,7 @@ public class MusicService extends Service implements
         player.reset();
         //get song
         Song playSong = songs.get(songPos);
+        songTitle=playSong.getTitle();
         //get id
         long currSong = playSong.getID();
         //set uri
