@@ -171,31 +171,37 @@ public class MainActivity extends AppCompatActivity implements MediaPlayerContro
 
     @Override
     public void start() {
-
+        musicService.go();
     }
 
     @Override
     public void pause() {
-
-    }
-
-    @Override
-    public int getDuration() {
-        return 0;
-    }
-
-    @Override
-    public int getCurrentPosition() {
-        return 0;
+        musicService.pausePlayer();
     }
 
     @Override
     public void seekTo(int pos) {
+        musicService.seek(pos);
+    }
 
+    @Override
+    public int getDuration() {
+        if(musicService!=null && musicBound && musicService.isPng())
+        return musicService.getDur();
+        else return 0;
+    }
+
+    @Override
+    public int getCurrentPosition() {
+        if(musicService!=null && musicBound && musicService.isPng())
+        return musicService.getPosn();
+        else return 0;
     }
 
     @Override
     public boolean isPlaying() {
+        if(musicService!=null && musicBound)
+        return musicService.isPng();
         return false;
     }
 
