@@ -16,6 +16,7 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MusicService extends Service implements
     MediaPlayer.OnPreparedListener,
@@ -26,9 +27,11 @@ public class MusicService extends Service implements
     private ArrayList<Song> songs;
     private int songPos; //current position
     private final IBinder musicBind = new MusicBinder();
-
     private String songTitle="";
     private static final int NOTIFY_ID=1;
+
+    private boolean shuffle=false;
+    private Random rand;
 
     public void onCreate(){
         //create the service
@@ -38,6 +41,13 @@ public class MusicService extends Service implements
         //create player
         player = new MediaPlayer();
         initMusicPlayer();
+
+        rand=new Random();
+    }
+
+    public void setShuffle(){
+        if(shuffle) shuffle=false;
+        else shuffle=true;
     }
 
     public void initMusicPlayer(){
