@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity implements MediaPlayerContro
     private boolean musicBound=false;
     private MusicController controller;
 
+    private boolean paused=false, playbackPaused=false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -167,6 +169,27 @@ public class MainActivity extends AppCompatActivity implements MediaPlayerContro
     private void playPrev(){
         musicService.playPrev();
         controller.show(0);
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        paused=true;
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        if(paused){
+            setController();
+            paused=false;
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        controller.hide();
+        super.onStop();
     }
 
     @Override
