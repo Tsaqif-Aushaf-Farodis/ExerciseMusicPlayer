@@ -161,13 +161,21 @@ public class MainActivity extends AppCompatActivity implements MediaPlayerContro
         controller.setAnchorView(findViewById(R.id.song_list));
         controller.setEnabled(true);
     }
-    //play next & previous
+
     private void playNext(){
         musicService.playNext();
+        if(playbackPaused){
+            setController();
+            playbackPaused=false;
+        }
         controller.show(0);
     }
     private void playPrev(){
         musicService.playPrev();
+        if(playbackPaused){
+            setController();
+            playbackPaused=false;
+        }
         controller.show(0);
     }
 
